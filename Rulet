@@ -1,0 +1,38 @@
+import pygame
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Set up a mock preview of the dealer's table using a placeholder image
+# Create a simple green felt background with placeholder buttons for "Multiplayer", "Tutorial", "Shop"
+
+pygame.init()
+WIDTH, HEIGHT = 800, 600
+surface = pygame.Surface((WIDTH, HEIGHT))
+
+# Colors
+GREEN = (34, 139, 34)
+YELLOW = (255, 215, 0)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+
+# Fill background
+surface.fill(GREEN)
+
+# Draw buttons
+font = pygame.font.SysFont('arial', 24)
+buttons = ['Multiplayer', 'Tutorial', 'Shop']
+for i, text in enumerate(buttons):
+    pygame.draw.rect(surface, YELLOW, (50, 50 + i*80, 200, 50), border_radius=10)
+    txt_surf = font.render(text, True, BLACK)
+    surface.blit(txt_surf, (60, 60 + i*80))
+
+# Draw dealer's table circle
+pygame.draw.ellipse(surface, BLACK, (300, 150, 400, 300), 5)
+
+# Convert to image for display
+table_image = pygame.surfarray.array3d(surface)
+table_image = np.rot90(table_image)
+plt.imshow(table_image)
+plt.axis('off')
+plt.tight_layout()
+plt.show()
